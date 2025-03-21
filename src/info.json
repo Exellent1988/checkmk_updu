@@ -1,0 +1,16 @@
+{
+    "author": "Riedo Networks Ltd",
+    "description": "Obtain measurements from RNX UPDU",
+    "download_url": "",
+    "files": {
+      "agent_based": [
+        "rnx_updu.py"
+      ]
+    },
+    "name": "rnx_updu",
+    "num_files": 1,
+    "title": "RNX UPDU Extension",
+    "version": "<VERSION>",
+    "version.min_required": "2.0.0",
+    "version.packaged": "2.0.0"
+}
