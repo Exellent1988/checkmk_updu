@@ -6,9 +6,9 @@ from typing import Any, Dict, List
 
 from .agent_based_api.v1 import startswith, register, Result, Service, SNMPTree, State
 from .agent_based_api.v1.type_defs import CheckResult, DiscoveryResult, StringTable
-from cmk.plugins.lib.elphase import check_elphase
-from cmk.plugins.lib.humidity import check_humidity
-from cmk.plugins.lib.temperature import check_temperature, TempParamType
+from .utils.elphase import check_elphase
+from .utils.humidity import check_humidity
+from .utils.temperature import check_temperature, TempParamType
 
 
 def parse_rnx_updu_power(
@@ -245,7 +245,7 @@ register.check_plugin(
     service_name='%s',
     discovery_function=discover_rnx_updu_power_out,
     check_function=check_rnx_updu_power_out,
-    check_ruleset_name='el_outphase',
+    check_ruleset_name='ups_outphase',
     check_default_parameters={},
 )
 
