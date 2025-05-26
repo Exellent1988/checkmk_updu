@@ -11,6 +11,6 @@
     "num_files": 1,
     "title": "RNX UPDU Extension",
     "version": "<VERSION>",
-    "version.min_required": "2.0.0",
-    "version.packaged": "2.0.0"
+    "version.min_required": "2.3.0",
+    "version.packaged": "2.3.0"
 }

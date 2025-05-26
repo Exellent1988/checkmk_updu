@@ -1,5 +1,5 @@
 build/
 dist/
 .venv/
-**/__pychache__/*
-
+*.pyc
+__pychache__/

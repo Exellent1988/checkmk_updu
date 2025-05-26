@@ -1,5 +1,10 @@
 # Revision History
 
+## Revision 0.0.3
+
+Switched to checkmk API v2
+Compatibility for Checkmk version 2.4 and later.
+
 ## Revision 0.0.2
 
 Compatibility for Checkmk version 2.3 and later.
