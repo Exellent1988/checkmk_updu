@@ -39,6 +39,7 @@ jobs:
           su -m cmk -c "cd '${GITHUB_WORKSPACE}'; .devcontainer/symlink.sh"
       - name: Build Extension
         run: |
+          chown -R cmk:cmk $GITHUB_WORKSPACE
           su -l cmk -c "cd '${GITHUB_WORKSPACE}';  .devcontainer/build.sh" 
       - name: Copy package
         run: |

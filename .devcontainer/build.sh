@@ -12,7 +12,7 @@ sed -i "s/<VERSION>/$VERSION/g" src/info
 #Infos
 echo "Package name: $NAME"
 echo "Version: $VERSION"
-
+echo "WORKSPACE: $WORKSPACE"
 
 
 #Clean up aktive package
@@ -28,17 +28,16 @@ mkp -v package $(pwd)/src/info ||:
 
 # Copy the built package
 if [ -f "/omd/sites/cmk/var/check_mk/packages_local/$NAME-$VERSION.mkp" ]; then
-    cp /omd/sites/cmk/var/check_mk/packages_local/$NAME-$VERSION.mkp $(pwd)/build/$NAME-$VERSION.mkp
-    echo "Package copied to ./build/$NAME-$VERSION.mkp"
+    cp /omd/sites/cmk/var/check_mk/packages_local/$NAME-$VERSION.mkp $WORKSPACE/build/$NAME-$VERSION.mkp && echo "Package copied to $WORKSPACE/build/$NAME-$VERSION.mkp" || echo "Package not found"
 fi
 
 # Inspect the package
-if [ -f "$(pwd)/build/$NAME-$VERSION.mkp" ]; then
+if [ -f "$WORKSPACE/build/$NAME-$VERSION.mkp" ]; then
     echo "Inspecting package:"
-    mkp inspect $(pwd)/build/$NAME-$VERSION.mkp
+    mkp inspect $WORKSPACE/build/$NAME-$VERSION.mkp
     sed -i "s/$VERSION/<VERSION>/g" src/info
 else
-    echo "Package file not found: $(pwd)/build/$NAME-$VERSION.mkp"
+    echo "Package file not found: $WORKSPACE/build/$NAME-$VERSION.mkp"
     echo "Available files in build directory:"
-    ls -la $(pwd)/build/
+    ls -la $WORKSPACE/build/
 fi
