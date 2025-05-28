@@ -39,7 +39,7 @@ jobs:
           su -m cmk -c "cd '${GITHUB_WORKSPACE}'; .devcontainer/symlink.sh"
       - name: Build Extension
         run: |
-          su -m cmk -c "cd '${GITHUB_WORKSPACE}'; PATH=$PATH:/omd/sites/cmk/bin/; .devcontainer/build.sh" 
+          su -l cmk -c "cd '${GITHUB_WORKSPACE}';  .devcontainer/build.sh" 
       - name: Copy package
         run: |
           cp $GITHUB_WORKSPACE/build/${CMKPKG_NAME}-${CMKPKG_VERSION}.mkp .
