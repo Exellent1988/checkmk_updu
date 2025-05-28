@@ -45,7 +45,7 @@ The CheckMK web interface is available at `http://localhost:8080/cmk` (user: `cm
 If you prefer to run CheckMK manually in Docker:
 
 ```bash
-REV="${REV:-2.3.0-latest}"
+REV="2.3.0-latest"
 
 docker run --rm -it -v /tmp/.X11-unix:/tmp/.X11-unix \
     --name checkmk \

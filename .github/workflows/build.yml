@@ -36,10 +36,10 @@ jobs:
       - name: Setup links
         run: |
           chown -R cmk:cmk $GITHUB_WORKSPACE
-          su -m cmk -c "$cd '${GITHUB_WORKSPACE}'; .devcontainer/symlink.sh"
+          su -m cmk -c "cd '${GITHUB_WORKSPACE}'; .devcontainer/symlink.sh"
       - name: Build Extension
         run: |
-          su -m cmk -c "$cd '${GITHUB_WORKSPACE}';PATH=$PATH:/omd/sites/cmk/bin/mkp; .devcontainer/build.sh" 
+          su -m cmk -c "cd '${GITHUB_WORKSPACE}'; PATH=$PATH:/omd/sites/cmk/bin/; .devcontainer/build.sh" 
       - name: Copy package
         run: |
           cp $GITHUB_WORKSPACE/build/${CMKPKG_NAME}-${CMKPKG_VERSION}.mkp .
