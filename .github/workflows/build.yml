@@ -34,9 +34,9 @@ jobs:
       - name: Setup links
         run: .devcontainer/symlink.sh
       - name: Build Extension
+        run: ./devcontainer/build.sh
+      - name: Copy package
         run: |
-          chown -R cmk:cmk $GITHUB_WORKSPACE
-          ./devcontainer/build.sh
           cp ./build/${CMKPKG_NAME}-${CMKPKG_VERSION}.mkp .
           echo "pkgfile=${CMKPKG_NAME}-${CMKPKG_VERSION}.mkp" >> $GITHUB_OUTPUT
         id: cmkpkg
