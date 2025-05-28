@@ -4,7 +4,7 @@ PKGNAME=$(python3 -c 'print(eval(open("src/info").read())["name"])')
 if [ -d ~/local/lib/python3/cmk_addons/plugins/$PKGNAME ]; then
     rm -rfv ~/local/lib/python3/cmk_addons/plugins/$PKGNAME
 fi
-ln -sv $WORKSPACE/src/$PKGNAME ~/local/lib/python3/cmk_addons/plugins/$PKGNAME
+ln -sv $WORKSPACE/src/$PKGNAME $OMD_ROOT/local/lib/python3/cmk_addons/plugins/$PKGNAME
 
 # ERROR='false'
 # for DIR in "agent_based" "rulesets" "graphing"; do

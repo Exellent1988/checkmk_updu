@@ -34,10 +34,12 @@ jobs:
       - name: Setup links
         run: .devcontainer/symlink.sh
       - name: Build Extension
-        run: ./devcontainer/build.sh
+        run: |
+          chown -R cmk:cmk $GITHUB_WORKSPACE
+          $GITHUB_WORKSPACE/.devcontainer/build.sh
       - name: Copy package
         run: |
-          cp ./build/${CMKPKG_NAME}-${CMKPKG_VERSION}.mkp .
+          cp $GITHUB_WORKSPACE/build/${CMKPKG_NAME}-${CMKPKG_VERSION}.mkp .
           echo "pkgfile=${CMKPKG_NAME}-${CMKPKG_VERSION}.mkp" >> $GITHUB_OUTPUT
         id: cmkpkg
       - name: Upload artifact
