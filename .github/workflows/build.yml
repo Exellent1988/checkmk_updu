@@ -27,8 +27,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Parse Package File
         run: |
-          NAME=$(python3 -c 'print(eval(open("info").read())["name"])')
-          VERSION=$(python3 -c 'print(eval(open("info").read())["version"])')
+          NAME=$(python3 -c 'print(eval(open("src/info").read())["name"])')
+          VERSION=$(python3 -c 'print(eval(open("src/info").read())["version"])')
           echo "CMKPKG_NAME=$NAME" >> "$GITHUB_ENV"
           echo "CMKPKG_VERSION=$VERSION" >> "$GITHUB_ENV"
       - name: Setup links
