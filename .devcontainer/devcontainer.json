@@ -34,7 +34,7 @@
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	//  "forwardPorts": [5000:5000],
+	  "forwardPorts": [5000:8080, 8000:8000],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": ".devcontainer/symlink.sh",
@@ -51,6 +51,6 @@
 		"OMD_ROOT": "/omd/sites/cmk",
 		"OMD_SITE": "cmk",
 		"CMK_SITE_ID": "cmk",
-		"WORKSPACE": "${containerWorkspaceFolder}/src"
+		"WORKSPACE": "${containerWorkspaceFolder}"
 	}
 }
