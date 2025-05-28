@@ -12,7 +12,8 @@ sed -i "s/<VERSION>/$VERSION/g" src/info
 #Infos
 echo "Package name: $NAME"
 echo "Version: $VERSION"
-echo "WORKSPACE: $WORKSPACE"
+echo "WORKSPACE:$WORKSPACE"
+echo "PWD: $(pwd)"
 
 
 #Clean up aktive package
@@ -28,7 +29,10 @@ mkp -v package $(pwd)/src/info ||:
 
 # Copy the built package
 if [ -f "/omd/sites/cmk/var/check_mk/packages_local/$NAME-$VERSION.mkp" ]; then
-    cp /omd/sites/cmk/var/check_mk/packages_local/$NAME-$VERSION.mkp $WORKSPACE/build/$NAME-$VERSION.mkp && echo "Package copied to $WORKSPACE/build/$NAME-$VERSION.mkp" || echo "Package not found"
+    cp /omd/sites/cmk/var/check_mk/packages_local/$NAME-$VERSION.mkp $WORKSPACE/build/$NAME-$VERSION.mkp && echo "Package copied to $WORKSPACE/build/$NAME-$VERSION.mkp"
+else
+    echo "Package not found"
+    ls -la /omd/sites/cmk/var/check_mk/packages_local/
 fi
 
 # Inspect the package

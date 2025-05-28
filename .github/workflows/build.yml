@@ -28,7 +28,7 @@ jobs:
       - name: Parse Package File
         run: |
           NAME=$(python3 -c 'print(eval(open("src/info").read())["name"])')
-          VERSION=$(python3 -c 'print(eval(open("src/info").read())["version"])')
+          VERSION=$(cat VERSION)
           echo "$NAME : $VERSION"
           echo "CMKPKG_NAME=$NAME" >> "$GITHUB_ENV"
           echo "CMKPKG_VERSION=$VERSION" >> "$GITHUB_ENV"
