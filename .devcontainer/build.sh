@@ -12,8 +12,6 @@ sed -i "s/<VERSION>/$VERSION/g" src/info
 #Infos
 echo "Package name: $NAME"
 echo "Version: $VERSION"
-echo "WORKSPACE:$WORKSPACE"
-echo "PWD: $(pwd)"
 
 
 #Clean up aktive package
