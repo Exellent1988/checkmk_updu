@@ -40,7 +40,7 @@ jobs:
       - name: Build Extension
         run: |
           chown -R cmk:cmk $GITHUB_WORKSPACE
-          su -l cmk -c "cd '${GITHUB_WORKSPACE}';  .devcontainer/build.sh" 
+          su -l cmk -c "cd '${GITHUB_WORKSPACE}';export WORKSPACE='$GITHUB_WORKSPACE'; .devcontainer/build.sh" 
       - name: Copy package
         run: |
           cp $GITHUB_WORKSPACE/build/${CMKPKG_NAME}-${CMKPKG_VERSION}.mkp .
