@@ -27,8 +27,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Parse Package File
         run: |
-          NAME=$(python3 -c 'print(eval(open("info").read())["name"])')
-          VERSION=$(python3 -c 'print(eval(open("info").read())["version"])')
+          NAME=$(python3 -c 'print(eval(open("src/info").read())["name"])')
+          VERSION=$(python3 -c 'print(eval(open("src/info").read())["version"])')
           echo "CMKPKG_NAME=$NAME" >> "$GITHUB_ENV"
           echo "CMKPKG_VERSION=$VERSION" >> "$GITHUB_ENV"
       - name: Setup links
@@ -36,8 +36,8 @@ jobs:
       - name: Build Extension
         run: |
           chown -R cmk:cmk $GITHUB_WORKSPACE
-          su -l -c "mkp -v package $GITHUB_WORKSPACE/package" cmk
-          cp /omd/sites/cmk/var/check_mk/packages_local/${CMKPKG_NAME}-${CMKPKG_VERSION}.mkp .
+          ./devcontainer/build.sh
+          cp ./build/${CMKPKG_NAME}-${CMKPKG_VERSION}.mkp .
           echo "pkgfile=${CMKPKG_NAME}-${CMKPKG_VERSION}.mkp" >> $GITHUB_OUTPUT
         id: cmkpkg
       - name: Create Release
