@@ -1,6 +1,6 @@
 # RNX UPDU Checkmk Extension
 
-A CheckMK extension for monitoring RNX UPDU (Uninterruptible Power Distribution Unit) devices.
+A CheckMK extension for monitoring RNX UPDU (Universal Power Distribution Unit) devices.
 
 ## Development Environment
 
