@@ -27,6 +27,9 @@ mkp -v package $(pwd)/src/info ||:
 
 # Copy the built package
 if [ -f "/omd/sites/cmk/var/check_mk/packages_local/$NAME-$VERSION.mkp" ]; then
+      if [ ! -d "$WORKSPACE/build/" ]; then
+          mkdir -p "$WORKSPACE/build/"
+      fi
     cp /omd/sites/cmk/var/check_mk/packages_local/$NAME-$VERSION.mkp $WORKSPACE/build/$NAME-$VERSION.mkp && echo "Package copied to $WORKSPACE/build/$NAME-$VERSION.mkp"
 else
     echo "Package not found"
