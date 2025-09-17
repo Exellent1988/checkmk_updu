@@ -165,7 +165,7 @@ def inventory_rnx_updu(section) -> InventoryResult:
             path=['hardware', 'components'],
             key_columns={'index': device_id},
             inventory_columns={
-                'type': device_data.get('type', 'PDU'),
+                'type': device_data.get('type','UPDU'),
                 'system_name': device_data.get('system_name') or '',
                 'custom_name': device_data.get('custom_name') or '',
                 'description': device_data.get('description') or '',

@@ -3,3 +3,6 @@ dist/
 .venv/
 *.pyc
 __pychache__/
+.DS_Store
+*/.DS_Store
+MIBs/
