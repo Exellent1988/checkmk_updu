@@ -5,8 +5,7 @@
      'cmk_addons_plugins': [
          'rnx_updu/agent_based/rnx_updu_power.py',
          'rnx_updu/agent_based/rnx_updu_sensors.py',
-         'rnx_updu/agent_based/rnx_updu_inventory.py',
-         
+         'rnx_updu/agent_based/rnx_updu_inventory.py'
      ],
  },
  'name': 'rnx_updu',

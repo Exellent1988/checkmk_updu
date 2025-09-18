@@ -1,5 +1,9 @@
 # Revision History
 
+## Revision 0.0.4
+
+Added inventory function, to discover Hardware Modules and Firmware Versions
+
 ## Revision 0.0.3
 
 Switched to checkmk API v2

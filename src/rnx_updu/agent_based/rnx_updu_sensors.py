@@ -89,7 +89,8 @@ def parse_rnx_updu_sensor(
                 if len(desc) > 1:
                     objname += f' [{desc}]'
                 if dq == State.UNKNOWN:
-                    print(f'WRN: Ignoring {objname} due to NoData Quality {qual_t}: {string_table[index]}')
+                    if debug.enabled():
+                        print(f'WRN: Ignoring {objname} due to NoData Quality {qual_t}: {string_table[index]}')
                     continue
 
                 val = {
