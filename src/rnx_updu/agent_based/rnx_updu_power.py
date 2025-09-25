@@ -148,7 +148,7 @@ check_plugin_rnx_updu_power_in = CheckPlugin(
     service_name='%s',
     discovery_function=discover_rnx_updu_power_in,
     check_function=check_rnx_updu_power_in,
-    check_ruleset_name='ups_inphase',
+    check_ruleset_name='el_inphase',
     check_default_parameters={'voltage': (200, 195), 'power': (2000, 3000), 'appower': (2200, 3300), 'current': (9, 10)},
 )
 
