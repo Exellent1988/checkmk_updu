@@ -101,13 +101,16 @@ def parse_rnx_updu_power(
         return data
     parsed_data = {}
     # This one must match the SNMPTree definitions in register.snmp_section
-    pwr_in_objs = [
+    pwr_in_combined_objs = [
         (0, 'pdu'),
         (1, 'inlets'),
+    ]
+    pwr_in_objs = [
         (2, 'wires'),
     ]
+    parsed_data['power_in_combined'] = power_data(string_table, pwr_in_combined_objs)
     parsed_data['power_in'] = power_data(string_table, pwr_in_objs)
-
+    
     # This one must match the SNMPTree definitions in register.snmp_section
     pwr_out_objs = [
         (3, 'branch'),
@@ -136,10 +139,21 @@ def discover_rnx_updu_power_in(section: Dict) -> DiscoveryResult:
         yield Service(item=key)
 
 
+def discover_rnx_updu_power_in_combined(section: Dict) -> DiscoveryResult:
+    for key in section['power_in_combined']:
+        yield Service(item=key)
+
+
 def check_rnx_updu_power_in(
     item: str, params: Mapping[str, Any], section: Dict
 ) -> CheckResult:
     yield from check_elphase(item, params, section['power_in'])
+
+
+def check_rnx_updu_power_in_combined(
+    item: str, params: Mapping[str, Any], section: Dict
+) -> CheckResult:
+    yield from check_elphase(item, params, section['power_in_combined'])
 
 
 check_plugin_rnx_updu_power_in = CheckPlugin(
@@ -149,7 +163,16 @@ check_plugin_rnx_updu_power_in = CheckPlugin(
     discovery_function=discover_rnx_updu_power_in,
     check_function=check_rnx_updu_power_in,
     check_ruleset_name='el_inphase',
-    check_default_parameters={'voltage': (200, 195), 'power': (2000, 3000), 'appower': (2200, 3300), 'current': (9, 10)},
+    check_default_parameters={'voltage': (200, 195), 'power': (2000, 3000), 'appower': (2200, 3300), 'current': (9, 3)},
+)
+check_plugin_rnx_updu_power_in_combined = CheckPlugin(
+    name='rnx_updu_power_in_combined',
+    sections=['rnx_updu_section_power'],
+    service_name='%s',
+    discovery_function=discover_rnx_updu_power_in_combined,
+    check_function=check_rnx_updu_power_in_combined,
+    check_ruleset_name='el_inphase',
+    check_default_parameters={'voltage': (200, 195), 'power': (6000, 9000), 'appower': (6600, 9900), 'current': (27, 30)},
 )
 
 
