@@ -4,8 +4,7 @@
 	"name": "Checkmk",
 	"build": {
 		"dockerfile": "Dockerfile",
-		// Update 'VARIANT' to pick an Ubuntu version: focal, bionic
-		"args": { "VARIANT": "2.3.0-latest" },
+		"args": { "VARIANT": "community:2.5.0p14" },
 		"platform": "linux/amd64",
 		"tempfs": {
 			"/omd/sites/cmk/tmp": "size=100M,uid=1000,gid=1000,mode=1777"
