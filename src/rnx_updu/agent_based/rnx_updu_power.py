@@ -15,7 +15,7 @@ from cmk.agent_based.v2 import (
     SNMPSection,
     CheckPlugin
 )
-from cmk.plugins.lib.elphase import check_elphase
+from cmk.plugins.lib.elphase import ElPhase, check_elphase
 
 try:
     from cmk.ccc import debug
@@ -147,13 +147,15 @@ def discover_rnx_updu_power_in_combined(section: Dict) -> DiscoveryResult:
 def check_rnx_updu_power_in(
     item: str, params: Mapping[str, Any], section: Dict
 ) -> CheckResult:
-    yield from check_elphase(item, params, section['power_in'])
+    if elphase := section['power_in'].get(item):
+        yield from check_elphase(params, ElPhase.from_dict(elphase))
 
 
 def check_rnx_updu_power_in_combined(
     item: str, params: Mapping[str, Any], section: Dict
 ) -> CheckResult:
-    yield from check_elphase(item, params, section['power_in_combined'])
+    if elphase := section['power_in_combined'].get(item):
+        yield from check_elphase(params, ElPhase.from_dict(elphase))
 
 
 check_plugin_rnx_updu_power_in = CheckPlugin(
@@ -187,7 +189,8 @@ def discover_rnx_updu_power_out(section: Dict) -> DiscoveryResult:
 def check_rnx_updu_power_out(
     item: str, params: Mapping[str, Any], section: Dict
 ) -> CheckResult:
-    yield from check_elphase(item, params, section['power_out'])
+    if elphase := section['power_out'].get(item):
+        yield from check_elphase(params, ElPhase.from_dict(elphase))
 
 
 check_plugin__rnx_updu_power_out = CheckPlugin(
