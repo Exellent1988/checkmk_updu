@@ -110,7 +110,7 @@ def parse_rnx_updu_power(
     ]
     parsed_data['power_in_combined'] = power_data(string_table, pwr_in_combined_objs)
     parsed_data['power_in'] = power_data(string_table, pwr_in_objs)
-    
+
     # This one must match the SNMPTree definitions in register.snmp_section
     pwr_out_objs = [
         (3, 'branch'),

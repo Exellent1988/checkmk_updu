@@ -72,7 +72,7 @@ def parse_rnx_updu_inventory(string_table: List[StringTable]):
                     section[pdu_key]['icm_serial'] = icm_serial_number.strip()
                     section[pdu_key]['icm_part_number'] = icm_part_number.strip()
                     section[pdu_key]['icm_lot_number'] = icm_lot_number.strip()
-                    
+
                     # Extract ICM revision from part number (e.g., "100-0141-3" -> revision 3)
                     icm_revision = 0
                     try:
@@ -86,21 +86,21 @@ def parse_rnx_updu_inventory(string_table: List[StringTable]):
 
                 if debug.enabled():
                     print(f"inventory.parse: updated {pdu_key} with ICM firmware data and revision {icm_revision}")
-    
+
     # Parse Module information (table 2) - POM modules
     if len(string_table) > 2 and len(string_table[2]) > 0:
         section['modules'] = {}
         for row_idx, row in enumerate(string_table[2]):
             if len(row) >= 8:  # Ensure we have all required module fields
-                (module_system_name, module_serial_number, module_part_number, 
-                 module_lot_number, module_rating, module_firmware, 
+                (module_system_name, module_serial_number, module_part_number,
+                 module_lot_number, module_rating, module_firmware,
                  module_composed_name, module_object_path) = row[:8]
-                
+
                 if debug.enabled():
                     print(f"inventory.parse: Module row {row_idx}: system={module_system_name} "
                           f"serial={module_serial_number} part={module_part_number} "
                           f"path={module_object_path}")
-                
+
                 # Extract phase information from object path
                 # ObjectPath format: "PDU/Inlet/WireL1/Module1" -> L1
                 phase = "Unknown"
@@ -111,9 +111,9 @@ def parse_rnx_updu_inventory(string_table: List[StringTable]):
                             phase = phase_part.replace("Wire", "")  # L1, L2, L3
                     except (IndexError, AttributeError):
                         pass
-                
+
                 module_key = f"module_{row_idx + 1}"
-                
+
                 # Extract POM revision from part number (e.g., "100-0715-2" -> revision 2)
                 pom_revision = 0
                 try:
@@ -123,7 +123,7 @@ def parse_rnx_updu_inventory(string_table: List[StringTable]):
                             pom_revision = int(revision_part)
                 except (AttributeError, ValueError, IndexError):
                     pass
-                
+
                 section['modules'][module_key] = {
                     'type': 'POM',  # Power Outlet Module
                     'system_name': module_system_name.strip(),
@@ -138,17 +138,17 @@ def parse_rnx_updu_inventory(string_table: List[StringTable]):
                     'outlets': 8,  # RNX POM modules typically have 8 outlets
                     'revision': pom_revision,
                 }
-                
+
                 if debug.enabled():
                     print(f"inventory.parse: added module {module_key} on phase {phase}")
-    
+
     # Note: Revisions are now extracted from part numbers directly
     # No need for separate revision parsing from table 3
     if debug.enabled():
         print(f"inventory.parse: built section with {len(section)} devices: {list(section.keys())}")
         if 'modules' in section:
             print(f"inventory.parse: found {len(section['modules'])} modules")
-    
+
     return section
 
 
@@ -225,7 +225,7 @@ def inventory_rnx_updu(section) -> InventoryResult:
                 'name': device_name,
                 'description': device_data.get('description') or 'RNX UPDU',
                 'part_number': device_data.get('part_number') or device_data.get('icm_part_number') or '',
-                
+
             }
         )
 
@@ -251,13 +251,13 @@ def inventory_rnx_updu(section) -> InventoryResult:
 
         if debug.enabled():
             print(f"inventory.inventory: generated inventory data for icm module {device_id}")
-    
+
     # Add detailed module information if available
     if 'modules' in section:
         for module_key, module_data in section['modules'].items():
             if debug.enabled():
                 print(f"inventory.inventory: processing module {module_key} with data {module_data}")
-            
+
             # Hardware modules table
             yield TableRow(
                 path=['hardware', 'modules'],
@@ -270,7 +270,7 @@ def inventory_rnx_updu(section) -> InventoryResult:
                     'serial_number': module_data.get('serial_number', ''),
                     'part_number': module_data.get('part_number', ''),
                     'lot_number': module_data.get('lot_number', ''),
-                    'Rating': f"{str(module_data.get('rating', 0)/1000)} A",
+                    'Rating': f"{str(module_data.get('rating', 0) / 1000)} A",
                     'firmware': module_data.get('firmware', ''),
                     'revision': str(module_data.get('revision', 0)),
                     'object_path': module_data.get('object_path', ''),
@@ -278,7 +278,7 @@ def inventory_rnx_updu(section) -> InventoryResult:
                     'description': module_data.get('description', 'Power Outlet Module'),
                 }
             )
-            
+
             # Software/firmware information for each module
             if module_data.get('firmware'):
                 yield TableRow(
@@ -295,7 +295,7 @@ def inventory_rnx_updu(section) -> InventoryResult:
                         'summary': f"Firmware for {module_data.get('type', 'Module')} on phase {module_data.get('phase', 'Unknown')}",
                     }
                 )
-            
+
             if debug.enabled():
                 print(f"inventory.inventory: generated module inventory for {module_key}")
 

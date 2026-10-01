@@ -22,7 +22,7 @@ except ImportError:
 
 def parse_rnx_updu_interfaces_simple(string_table: List[StringTable]) -> Dict[str, Any]:
     """Simple parser for RNX UPDU interfaces - just get basic info."""
-    
+
     if debug.enabled():
         print(f"interfaces_simple.parse: received string_table with {len(string_table)} tables")
         for i, table in enumerate(string_table):
@@ -37,28 +37,28 @@ def parse_rnx_updu_interfaces_simple(string_table: List[StringTable]) -> Dict[st
         for row_idx, row in enumerate(table):
             if debug.enabled():
                 print(f"interfaces_simple.parse: processing row {row_idx}: {row}")
-            
+
             # Try different row lengths to be very permissive
             if len(row) >= 2:
                 if_index = row[0] if len(row) > 0 else str(row_idx + 1)
                 if_descr = row[1] if len(row) > 1 else f"Interface {if_index}"
                 if_type = row[2] if len(row) > 2 else "1"
-                
+
                 interface_key = f"interface_{if_index}"
-                
+
                 section[interface_key] = {
                     'index': if_index,
                     'description': if_descr,
                     'type': if_type,
                     'raw_data': row,  # Keep raw data for debugging
                 }
-                
+
                 if debug.enabled():
                     print(f"interfaces_simple.parse: added {interface_key}: {section[interface_key]}")
-    
+
     if debug.enabled():
         print(f"interfaces_simple.parse: final section: {section}")
-        
+
     return section
 
 
@@ -83,14 +83,14 @@ snmp_section_rnx_updu_interfaces_simple = SNMPSection(
 
 def inventory_rnx_updu_interfaces_simple(section: Dict[str, Any]) -> InventoryResult:
     """Simple inventory function."""
-    
+
     if debug.enabled():
         print(f"interfaces_simple.inventory: section = {section}")
-    
+
     for interface_key, interface_data in section.items():
         if debug.enabled():
             print(f"interfaces_simple.inventory: processing {interface_key}")
-            
+
         # Very basic inventory entry
         yield TableRow(
             path=['networking', 'interfaces'],
@@ -102,7 +102,7 @@ def inventory_rnx_updu_interfaces_simple(section: Dict[str, Any]) -> InventoryRe
                 'raw_data': str(interface_data.get('raw_data', [])),
             }
         )
-        
+
         if debug.enabled():
             print(f"interfaces_simple.inventory: generated inventory for {interface_key}")
 
@@ -112,4 +112,3 @@ inventory_plugin_rnx_updu_interfaces_simple = InventoryPlugin(
     sections=['rnx_updu_interfaces_simple_section'],
     inventory_function=inventory_rnx_updu_interfaces_simple,
 )
-

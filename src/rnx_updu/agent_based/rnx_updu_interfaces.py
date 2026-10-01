@@ -37,7 +37,7 @@ def parse_rnx_updu_interfaces(string_table: List[StringTable]) -> Dict[str, Any]
 
     section = {}
 
-    # Parse interface table (table 0) 
+    # Parse interface table (table 0)
     if len(string_table) > 0 and len(string_table[0]) > 0:
         for row_idx, row in enumerate(string_table[0]):
             if len(row) >= 6:  # Minimum required fields
@@ -69,14 +69,14 @@ def parse_rnx_updu_interfaces(string_table: List[StringTable]) -> Dict[str, Any]
 
                 if debug.enabled():
                     print(f"interfaces.parse: added interface {interface_key} with data {section[interface_key]}")
-    
+
     else:
         if debug.enabled():
             print("interfaces.parse: No interface data found in string_table")
 
     if debug.enabled():
         print(f"interfaces.parse: Found {len(section)} interfaces total")
-        
+
     return section
 
 
@@ -84,6 +84,7 @@ def parse_rnx_updu_interfaces(string_table: List[StringTable]) -> Dict[str, Any]
 def _detect_if_mib_exists(oid_values):
     """Check if standard IF-MIB exists."""
     return oid_values['.1.3.6.1.2.1.1.1.0'].startswith('RNX UPDU')
+
 
 # SNMP Section for network interfaces using standard IF-MIB
 snmp_section_rnx_updu_interfaces = SNMPSection(
@@ -100,7 +101,7 @@ snmp_section_rnx_updu_interfaces = SNMPSection(
                 '2',   # ifDescr - required for description
                 '3',   # ifType - helps identify interface type
                 '4',   # ifMtu - optional but useful
-                '5',   # ifSpeed - optional but useful  
+                '5',   # ifSpeed - optional but useful
                 '7',   # ifAdminStatus - required for status
                 '8',   # ifOperStatus - required for status
             ],
